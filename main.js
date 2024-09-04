@@ -8,8 +8,6 @@ image.addEventListener('mouseover', () => {
 image.addEventListener('mouseout', () => {
     image.style.animationPlayState = 'running'; // Resume animation when not hovering
 });
-
-// Save contact vCard logic
 document.addEventListener('DOMContentLoaded', () => {
     const saveButton = document.querySelector('.save-btn a.save');
 
@@ -27,25 +25,25 @@ URL:http://www.cloud251.com
 END:VCARD
         `.trim();
 
-        // Create a Blob from the vCard data
-        const blob = new Blob([vCardData], { type: 'text/vcard' });
-        const url = URL.createObjectURL(blob);
+        // Encode vCard data as a data URI
+        const encodedData = encodeURIComponent(vCardData);
+        const dataUri = `data:text/vcard;charset=utf-8,${encodedData}`;
 
         // Create and click a link to download the vCard file
         const link = document.createElement('a');
-        link.href = url;
+        link.href = dataUri;
         link.download = 'Mussie_Haile_Contact.vcf'; // File name
         document.body.appendChild(link);
         link.click();
 
         // Clean up
-        URL.revokeObjectURL(url);
         link.remove();
 
         // Provide feedback to the user
         alert('The contact vCard has been downloaded. Please import it into your contacts. Thank you!');
     });
 });
+
 
 // Create cloud effect
 document.addEventListener('DOMContentLoaded', () => {
