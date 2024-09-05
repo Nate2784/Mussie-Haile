@@ -1,22 +1,15 @@
-// Handle image hover animation
-const image = document.querySelector('.image-section img');
 
-image.addEventListener('mouseover', () => {
-    image.style.animationPlayState = 'paused'; // Pause animation on hover
-});
-
-image.addEventListener('mouseout', () => {
-    image.style.animationPlayState = 'running'; // Resume animation when not hovering
-});
-document.addEventListener('DOMContentLoaded', () => {
+// save contact logic
+document.addEventListener('DOMContentLoaded', function() {
     const saveButton = document.querySelector('.save-btn a.save');
 
-    saveButton.addEventListener('click', (event) => {
+    saveButton.addEventListener('click', function(event) {
         event.preventDefault();
 
         const vCardData = `
 BEGIN:VCARD
 VERSION:3.0
+N:Mussie;Haile;;;
 FN:Mussie Haile
 ORG:Cloud 251
 TEL;TYPE=CELL:+17033621125
@@ -25,25 +18,23 @@ URL:http://www.cloud251.com
 END:VCARD
         `.trim();
 
-        // Encode vCard data as a data URI
-        const encodedData = encodeURIComponent(vCardData);
-        const dataUri = `data:text/vcard;charset=utf-8,${encodedData}`;
+        // Create a Blob from the vCard data
+        const blob = new Blob([vCardData], { type: 'text/vcard' });
+        const url = URL.createObjectURL(blob);
 
-        // Create and click a link to download the vCard file
+        // Create a link element and simulate a click to download the file
         const link = document.createElement('a');
-        link.href = dataUri;
+        link.href = url;
         link.download = 'Mussie_Haile_Contact.vcf'; // File name
-        document.body.appendChild(link);
         link.click();
 
-        // Clean up
-        link.remove();
-
+        // Clean up the URL object
+        URL.revokeObjectURL(url);
+        
         // Provide feedback to the user
-        alert('The contact vCard has been downloaded. Please import it into your contacts. Thank you!');
+        alert('The contact vCard has been downloaded. if you\'re on Android Please open and import it into your contacts. Thank you! \n  (✿◡‿◡)');
     });
 });
-
 
 // Create cloud effect
 document.addEventListener('DOMContentLoaded', () => {
