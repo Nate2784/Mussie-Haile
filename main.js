@@ -1,4 +1,3 @@
-
 // save contact logic
 document.addEventListener('DOMContentLoaded', function() {
     const saveButton = document.querySelector('.save-btn a.save');
